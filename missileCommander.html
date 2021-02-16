@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Basic Missile Command HTML Game</title>
+    <meta charset="UTF-8">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            cursor: crosshair;
+            border: 1px solid white;
+        }
+
+        button {
+            background-color: #dc143c;
+            width: 100px;
+            height: 20px;
+            position: fixed;
+            left: 10px;
+            bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="800" height="550" id="game"></canvas>
+    <button class="button" , id="backButton">Return</button>
+    <script src="missileCommander.js"></script>
+</body>
+
+</html>
+<!-- https://gist.github.com/straker/afc4e2a30b6df772a5f9f6ef01751d41 -->

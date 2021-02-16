@@ -1,0 +1,114 @@
+<!-- Tells what type of file this is: -->
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <style>
+
+        @font-face {
+            font-family: 'arcade_font';
+            src: url('ARCADECLASSIC.TTF');
+            font-style: normal;
+        }
+
+        html,
+        body {
+            background-image: url('images/bkg.jpg');
+            width: 254px;
+            height: 334px;
+            font-family: 'arcade_font';
+        }
+
+        .scoreButton {
+            width: 111px;
+            height: 16px;
+            position: absolute;
+            top: 4px;
+            left: 71px;
+            background-color: red;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        /* uses CSS(style) to make a style for the button(s) we'll create:*/
+        .titleButton {
+            margin: auto;
+            position: absolute;
+            height: 58px;
+            width: 236px;
+            text-align: center;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            font-family: inherit;
+        }
+
+        .pacmanButton {
+            background-image: url(images/pacmanTitle.png);
+            top: 24px;
+            left: 9px;
+            /*CHANGE COLOR TO MATCH BACKGROUND LATER*/
+            color: white;
+            font-size: 3em;
+        }
+
+        .pongButton {
+            background-image: url(images/pongTitle.png);
+            top: 102px;
+            left: 9px;
+            /*CHANGE COLOR TO MATCH BACKGROUND LATER*/
+            color: white;
+            font-size: 4em;
+        }
+
+        .breakoutButton {
+            background-image: url(images/breakoutTitle.png);
+            top: 181px;
+            left: 9px;
+            /*CHANGE COLOR TO MATCH BACKGROUND LATER*/
+            color: black;
+            font-size: 3em;
+        }
+
+        .snakeButton {
+            background-image: url(images/snakeTitle.png);
+            top: 258px;
+            left: 9px;
+            /*CHANGE COLOR TO MATCH BACKGROUND LATER*/
+            color: red;
+            font-size: 3em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class = "scoreButton", id = "scoreButton", label = "Scores">
+        HIGH_SCORES
+    </button>
+
+    <!-- create buttons. For now the js file only handles the breakout button, mapped to missile command" -->
+
+    <button class="titleButton pacmanButton" , id="pacmanButton" , label="Pac-man">
+        PACMAN
+    </button>
+
+    <button class="titleButton pongButton" , id="pongButton" , label="Pong">
+        PONG
+    </button>
+
+    <button class="titleButton breakoutButton" , id="missleCommanderButton" , label="Missle Command">
+        BREAKOUT
+    </button>
+    <!--NOTE: NEED TO CHANGE ID TO MAKE THIS WORK FOR BREAKOUT LOL-->
+
+    <button class="titleButton snakeButton" , id="snakeButton" , label="Snake">
+        SNAKE
+    </button>
+
+    <script src="index.js"></script> <!-- Calls our popup jscript)-->
+</body>
+
+</html>
