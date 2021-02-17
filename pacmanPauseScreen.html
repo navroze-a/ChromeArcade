@@ -34,18 +34,104 @@
             height: 27px;
             left: 69px;
             top: 300px;
-            background-image: url(images/pacmanTitle.png);
+            background-image: url(images/pacmanStartTile.png);
             /*CHANGE COLOR TO MATCH BACKGROUND LATER*/
             color: #ffba00;
-            font-size: 1em;
+            font-size: 1.5em;
+        }
+
+        .backButton {
+            margin: auto;
+            position: absolute;
+            outline: none;
+            -webkit-appearance: none;
+            width: 30px;
+            height: 22px;
+            left: 2px;
+            top: 4px;
+            background: transparent;
+            border: none;
+            background-image: url(images/exit.png);
+            background-color: transparent;
+
+
+        }
+
+        .instruct {
+            font-family: inherit;
+            color: white;
+            text-align: center;
+        }
+
+        .title {
+
+            font-size: 30px;
+            position: absolute;
+            top: -26px;
+            left: 35px;
+        }
+
+        .subtitle {
+            font-size: 2em;
+            position: absolute;
+            top: 10px;
+            left: 30px;
+        }
+
+        .text {
+            position: absolute;
+            font-size: 16px;
+            text-align: left;
+            top: 70px;
+            color: yellow;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+
+        }
+
+        ul li {
+            padding: 5px 18px;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <button class="startButton" , id="pacmanStartButton" , label="Start!">
+    <p class="instruct title"> Instructions</p>
+    <p class="instruct subtitle">(Official Rules)</p>
+    <!-- <p class="instruct text" style="text-align: center">
+        Avoid the Ghosts by moving <br> with the <span style="color: red">arrow keys!!</span>
+        <br>
+        <br> Dots score <span style="color: red"><br>10 pts</span>
+        <br>
+        <br> Flashing energizers score <span style="color: red"><br>50 pts!</span>
+        <br>
+        <br> After energizing, Pacman can <span style="color: red"><br>attack ghosts!</span>
+        <br>
+        <br> Beware of flashing ghosts which are about to change back to the <span style="color: red">dangerous</span>
+        colours
+
+    </p> -->
+    <ul class="instruct text">
+        <li>Avoid the Ghosts by moving with the <span style="color: red">Arrow Keys!</span></li>
+        <li>Dots score <span style="color: red">10 pts</li>
+        <li>Flashing energizers score <span style="color: red">50 pts!</li>
+        <li>After energizing, Pacman can <span style="color: red">attack ghosts!</li>
+        <li>Beware  of  flashing ghosts which are about to change back to the <span style="color: red">dangerous</span>
+            colours</li>
+    </ul>
+
+
+    <button class="startButton" , id="pacStartButton" , label="Start!">
         START!
     </button>
+    <button class="backButton" , id="returnButton" , label="Return to Main Menu"></button>
+
+    <script src = "pacmanPauseScreen.js"></script>
 </body>
 
 </html>
