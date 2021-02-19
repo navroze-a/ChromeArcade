@@ -17,9 +17,11 @@
             font-style: normal;
         }
         #pacman {
-            height:450px;
+            height:400px;
             width:342px;
-            margin:50px auto;
+            margin-top: 0px;
+            top: 100px;
+
         }
         #shim {
             font-family: BDCartoonShoutRegular;
@@ -35,16 +37,16 @@
             width: 100px;
             height: 20px;
             position: fixed;
-            left: 171px;
-            top: 10px;
+            left: 35%;
+            top: 0px;
         }
         .restartButton {
             background-color: #dc143c;
             width: 100px;
             height: 20px;
             position: fixed;
-            left: 375px;
-            top: 50px;
+            left: 120px;
+            top: 300px;
             visibility: hidden;
         }
 
@@ -54,7 +56,8 @@
 
 <body>
 
-<div id="shim">shim for font face</div>
+<div id="shim" style = "font-family: arcade_font">shim for font face</div>
+<!-- <div style = "font-family: arcade_font">.</div> -->
 <button class="returnButton" , id="backButton">Return</button>
 <button class="restartButton" , id="restartButton">Play Again</button>
 <div id="pacman"></div>
