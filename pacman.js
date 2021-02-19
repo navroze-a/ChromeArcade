@@ -913,16 +913,22 @@ var PACMAN = (function () {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 500, 700);
         // draw the GameOver Text in the middle
-        drawText("Game Over", 0, 0.5*400);
-        drawText("Score", 0, 0.7*400);
-        drawScoreText(user.theScore(), 0, 0.9*400);
+        drawText("Game Over", 0, 0.5 * 400);
+        drawText("Score", 0, 0.7 * 400);
+        drawScoreText(user.theScore(), 0, 0.9 * 400);
         restartButton.style.visibility = "visible";
 
-        
-        chrome.storage.sync.set({pacmanHighScore: user.theScore()}, function () {
-          console.log("set pacman high score to 0");
+
+
+        chrome.storage.sync.get(['pacmanHighScore'], function (result) {
+            console.log('Pacman score currently is ' + result.pacmanHighScore + 'and is being displayed');
+            if (user.theScore() > result.pacmanHighScore) {
+                chrome.storage.sync.set({ pacmanHighScore: user.theScore() }, function () {
+                    console.log("set pacman high score to " + user.theScore());
+                });
+            }
         });
-    }
+    };
 
 
 
@@ -1067,7 +1073,7 @@ var PACMAN = (function () {
             }
         }
 
-        if (user.getLives()) 
+        if (user.getLives())
             drawFooter();
     }
 
