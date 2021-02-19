@@ -115,17 +115,21 @@ function loop() {
 
                 // snake occupies same space as a body part. reset game
                 if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-                    snake.x = 160;
-                    snake.y = 160;
-                    snake.cells = [];
-                    snake.maxCells = 4;
-                    snake.dx = grid;
-                    snake.dy = 0;
-
-                    apple.x = getRandomInt(0, 25) * grid;
-                    apple.y = getRandomInt(0, 25) * grid;
-
                     snake.alive = false;
+                    if (alive) {
+                        snake.x = 160;
+                        snake.y = 160;
+                        snake.cells = [];
+                        snake.maxCells = 4;
+                        snake.dx = grid;
+                        snake.dy = 0;
+                        apple.x = getRandomInt(0, 25) * grid;
+                        apple.y = getRandomInt(0, 25) * grid;
+                    }
+
+
+
+
                 }
             }
         });
