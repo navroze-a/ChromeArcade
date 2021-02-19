@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Basic Snake HTML Game</title>
+    <meta charset="UTF-8">
+    <style>
+        @font-face {
+            font-family: 'arcade_font';
+            src: url('ARCADECLASSIC.TTF');
+            font-style: normal;
+
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'arcade_font';
+
+
+
+        }
+
+        body {
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .returnButton {
+            background-color: #dc143c;
+            width: 100px;
+            height: 20px;
+            position: fixed;
+            left: 155px;
+            top: 10px;
+        }
+
+        .restartButton {
+            background-color: #dc143c;
+            width: 100px;
+            height: 20px;
+            position: fixed;
+            left: 155px;
+            top: 50px;
+            visibility: hidden;
+        }
+
+        canvas {
+            border: 2px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="400" height="400" id="game"></canvas>
+    <div style="font-family: arcade_font">.</div>
+    <button class="returnButton" , id="backButton">Return</button>
+    <button class="restartButton" , id="restartButton">Play Again</button>
+    <script src="snake.js"></script>
+</body>
+
+</html>

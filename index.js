@@ -6,12 +6,6 @@ let pongButton = document.getElementById("pongButton");
 let breakoutButton = document.getElementById("breakoutButton");
 let snakeButton = document.getElementById("snakeButton");
 
-/*
-missleCommandButton.onclick = function (element) {
-    console.log("button clicked");
-    window.location.href = "missileCommander.html";
-};
-*/
 
 pacmanButton.onclick = function(element) {
     console.log("pacman game button clicked");
@@ -20,17 +14,17 @@ pacmanButton.onclick = function(element) {
 
 pongButton.onclick = function(element) {
     console.log("pong game button clicked");
-    window.location.href = "missileCommander.html";
+    window.location.href = "pongPauseScreen.html";
 }
 
 breakoutButton.onclick = function(element) {
     console.log("breakout game button clicked");
-    window.location.href = "missileCommander.html";
+    window.location.href = "breakoutPauseScreen.html";
 }
 
 snakeButton.onclick = function(element) {
     console.log("snake game button clicked");
-    window.location.href = "missileCommander.html";
+    window.location.href = "snakePauseScreen.html";
 }
 
 
