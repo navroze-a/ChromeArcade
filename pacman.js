@@ -895,14 +895,16 @@ var PACMAN = (function () {
 
     function drawText(text, x, y) {
         ctx.fillStyle = "white";
-        ctx.font = "40px arcade_font";
-        ctx.fillText(text, x, y);
+        ctx.font = "70px arcade_font";
+        ctx.textAlign = "center";
+        ctx.fillText(text, 171, y);
     }
 
     function drawScoreText(text, x, y) {
         ctx.fillStyle = "red";
-        ctx.font = "90px arcade_font";
-        ctx.fillText(text, x, y);
+        ctx.font = "120px arcade_font";
+        ctx.textAlign = "center";
+        ctx.fillText(text, 171, y);
     }
 
     function gameOver() {
@@ -911,14 +913,14 @@ var PACMAN = (function () {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 500, 700);
         // draw the GameOver Text in the middle
-        drawText("Game Over!", 75, 90);
-        drawText("Your score was", 30, 180);
-        drawScoreText(user.theScore(), 110, 280);
+        drawText("Game Over", 0, 0.5*400);
+        drawText("Score", 0, 0.7*400);
+        drawScoreText(user.theScore(), 0, 0.9*400);
         restartButton.style.visibility = "visible";
 
         
         chrome.storage.sync.set({pacmanHighScore: user.theScore()}, function () {
-          console.log("set missle pacman high score to 0");
+          console.log("set pacman high score to 0");
         });
     }
 
@@ -1065,7 +1067,8 @@ var PACMAN = (function () {
             }
         }
 
-        drawFooter();
+        if (user.getLives()) 
+            drawFooter();
     }
 
     function eatenPill() {
