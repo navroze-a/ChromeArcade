@@ -315,7 +315,7 @@ function gameWin(){
     // draw the GameOver Text in the middle
     drawText("You Won!!",0.5*canvas.width,0.5*canvas.height);
     drawText("Score",0.5*canvas.width,0.75*canvas.height);
-    drawScoreText(score,0.5*canvas.width,0.9*canvas.height);
+    drawScoreText(score,0.5*canvas.width,0.975*canvas.height);
     restartButton.style.visibility="visible";
 
 
@@ -329,12 +329,18 @@ function gameOver(){
     // draw the GameOver Text in the middle
     drawText("Game Over",0.5*canvas.width,0.5*canvas.height);
     drawText("Score",0.5*canvas.width,0.75*canvas.height);
-    drawScoreText(score,0.5*canvas.width,0.9*canvas.height);
+    drawScoreText(score,0.5*canvas.width,0.975*canvas.height);
     restartButton.style.visibility="visible";
 
+    chrome.storage.sync.get(['breakoutHighScore'], function (result) {
+        if (score > result.breakoutHighScore) {
+            chrome.storage.sync.set({ breakoutHighScore: score}, function () {
+                console.log("set breakout high score to" + score);
+            });
+        }
+    });
+
     // draw the Player score to the right
-
-
 
 }
 

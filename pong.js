@@ -4,7 +4,7 @@ let restartButton = document.getElementById("restartButton");
 // select canvas element
 const canvas = document.getElementById("pong");
 
-// getContext of canvas = methods and properties to draw and do a lot of thing to the canvas
+// getctx of canvas = methods and properties to draw and do a lot of thing to the canvas
 const ctx = canvas.getContext('2d');
 
 // load sounds
@@ -96,15 +96,17 @@ function resetBall(){
 
 
 // draw text
-function drawText(text,x,y){
+function drawText(text, x, y) {
     ctx.fillStyle = "#FFF";
-    ctx.font = "85px arcade_font";
+    ctx.font = "120px arcade_font";
+    ctx.textAlign = "center";
     ctx.fillText(text, x, y);
 }
 
-function drawEndText(text,x,y){
-    ctx.fillStyle = "#FFF";
-    ctx.font = "75px arcade_font";
+function drawScoreText(text, x, y) {
+    ctx.fillStyle = "#ff0000";
+    ctx.font = "150px arcade_font";
+    ctx.textAlign = "center";
     ctx.fillText(text, x, y);
 }
 
@@ -209,16 +211,23 @@ function render(){
 function gameOver(){
 
     // clear the canvas
-    drawRect(0, 0, canvas.width, canvas.height, "#000");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // draw the GameOver Text in the middle
-    drawEndText("Game Over",0.21*canvas.width,0.5*canvas.height);
-    drawEndText("Your score was",0.07*canvas.width,0.7*canvas.height);
-
-    // draw the Player score to the right
-    drawText(user.score,0.5*canvas.width,0.9*canvas.height);
+    drawText("Game Over",0.5*canvas.width,0.5*canvas.height);
+    drawText("Score",0.5*canvas.width,0.75*canvas.height);
+    drawScoreText(user.score,0.5*canvas.width,0.99*canvas.height);
     restartButton.style.visibility="visible";
 
+    chrome.storage.sync.get(['pongHighScore'], function (result) {
+        if (user.score > result.pongHighScore) {
+            chrome.storage.sync.set({ pongHighScore: user.score}, function () {
+                console.log("set pong high score to" + user.score);
+            });
+        }
+    });
+
+    // draw the Player score to the right
 
 }
 
