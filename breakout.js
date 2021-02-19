@@ -4,13 +4,13 @@ const context = canvas.getContext('2d');
 // each row is 14 bricks long. the level consists of 6 blank rows then 8 rows
 // of 4 colors: red, orange, green, and yellow
 
-backButton.onclick = function() {
+backButton.onclick = function () {
     backButton.style.color = "green";
     backButton.style.background = "pink";
     window.location.href = "index.html";
 };
 
-restartButton.onclick = function() {
+restartButton.onclick = function () {
     backButton.style.color = "green";
     backButton.style.background = "pink";
     window.location.href = "breakout.html";
@@ -23,14 +23,14 @@ const level1 = [
     [],
     [],
     [],
-    ['R','R','R','R','R','R','R','R','R','R','R','R','R','R'],
-    ['R','R','R','R','R','R','R','R','R','R','R','R','R','R'],
-    ['O','O','O','O','O','O','O','O','O','O','O','O','O','O'],
-    ['O','O','O','O','O','O','O','O','O','O','O','O','O','O'],
-    ['G','G','G','G','G','G','G','G','G','G','G','G','G','G'],
-    ['G','G','G','G','G','G','G','G','G','G','G','G','G','G'],
-    ['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
-    ['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y']
+    ['R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
+    ['R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
+    ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
+    ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
+    ['G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+    ['G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+    ['Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'],
+    ['Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y']
 ];
 
 // create a mapping between color short code (R, O, G, Y) and color name
@@ -75,7 +75,7 @@ const paddle = {
     // place the paddle horizontally in the middle of the screen
     x: canvas.width / 2 - brickWidth / 2,
     y: 440,
-    width: brickWidth,
+    width: 2 * brickWidth,
     height: brickHeight,
 
     // paddle x velocity
@@ -83,7 +83,7 @@ const paddle = {
 };
 
 const ball = {
-    x: 130,
+    x: Math.random() * ((canvas.width - wallSize) - (wallSize)) + (wallSize),
     y: 260,
     width: 5,
     height: 5,
@@ -93,7 +93,9 @@ const ball = {
 
     // ball velocity
     dx: 0,
-    dy: 0
+    dy: 0,
+
+    counter: 0
 };
 
 
@@ -110,7 +112,7 @@ function collides(obj1, obj2) {
 // game loop
 function loop() {
 
-    if(score==896) {
+    if (score >= 448) {
         gameWin();
     } else if (lives > 0) {
         requestAnimationFrame(loop);
@@ -123,8 +125,8 @@ function loop() {
         // prevent paddle from going through walls
         if (paddle.x < wallSize) {
             paddle.x = wallSize
-        } else if (paddle.x + brickWidth > canvas.width - wallSize) {
-            paddle.x = canvas.width - wallSize - brickWidth;
+        } else if (paddle.x + paddle.width > canvas.width - wallSize) {
+            paddle.x = canvas.width - wallSize - paddle.width;
         }
 
         // move ball by it's velocity
@@ -148,12 +150,13 @@ function loop() {
 
         // reset ball if it goes below the screen
         if (ball.y > canvas.height) {
-            ball.x = 130;
+            ball.x = Math.random() * ((canvas.width - wallSize) - (wallSize)) + (wallSize);
             ball.y = 260;
             ball.dx = 0;
             ball.dy = 0;
             lives--;
-            //ball.speed=2;
+            ball.speed = 2;
+            ball.counter = 0;
         }
 
 
@@ -184,31 +187,35 @@ function loop() {
                 // remove brick from the bricks array
                 bricks.splice(i, 1);
 
-                let counter = score;
+                ball.counter++;
 
-                if(brick.color=='yellow') {
+                if (brick.color == 'yellow') {
                     console.log("I am" + brick.color);
-                    counter++;
-                } else if(brick.color=='green') {
-                    counter+=3;
+                    score++;
+                } else if (brick.color == 'green') {
+                    score += 3;
                     console.log("I am" + brick.color);
-                } else if(brick.color=='orange') {
-                    counter+=5;
+                } else if (brick.color == 'orange') {
+                    score += 5;
                     console.log("I am" + brick.color);
-                } else if(brick.color=='red'){
-                    counter+=7;
+                } else if (brick.color == 'red') {
+                    score += 7;
                     console.log("I am" + brick.color);
                 } else {
-                    console.log("I am retard");
+                    console.log("I am pretty. And beaudtu=iful.");
                 }
 
 
-                console.log("Final" + brick.color);
-
-                score = counter;
+                console.log("FINAL: Hit brick " + brick.color);
 
 
-                ball.speed += 0.0001;
+
+                ball.dx /= ball.speed;
+                ball.dy /= ball.speed;
+                ball.speed += 0.2;
+                ball.dx *= ball.speed;
+                ball.dy *= ball.speed;
+
 
                 // ball is above or below the brick, change y velocity
                 // account for the balls speed since it will be inside the brick when it
@@ -223,6 +230,9 @@ function loop() {
                     ball.dx *= -1;
 
                 }
+
+
+
 
                 // let collidePoint = (ball.y - (brick.width + brick.height/2));
                 // // normalize the value of collidePoint, we need to get numbers between -1 and 1.
@@ -260,8 +270,8 @@ function loop() {
 
         // draw walls
         context.fillStyle = 'lightgrey';
-        context.fillRect(0, 0, canvas.width, wallSize);
-        context.fillRect(0, 0, wallSize, canvas.height);
+        context.fillRect(0, 0, canvas.width, wallSize); //top wall
+        context.fillRect(0, 0, wallSize, canvas.height);    // left wall
         context.fillRect(canvas.width - wallSize, 0, wallSize, canvas.height);
 
         // draw ball if it's moving
@@ -281,7 +291,8 @@ function loop() {
 
         //draw score
 
-        drawInScoreText(score,0.05*canvas.width,0.97*canvas.height);
+        drawInScoreText(score, 0.05 * canvas.width, 0.97 * canvas.height);
+        drawInScoreText(lives, 0.91*canvas.width,  0.97 * canvas.height);
     } else {
         gameOver();
     }
@@ -307,34 +318,34 @@ function drawScoreText(text, x, y) {
 // draw text
 
 
-function gameWin(){
+function gameWin() {
 
     // clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     // draw the GameOver Text in the middle
-    drawText("You Won!!",0.5*canvas.width,0.5*canvas.height);
-    drawText("Score",0.5*canvas.width,0.75*canvas.height);
-    drawScoreText(score,0.5*canvas.width,0.975*canvas.height);
-    restartButton.style.visibility="visible";
+    drawText("You Won!!", 0.5 * canvas.width, 0.5 * canvas.height);
+    drawText("Score", 0.5 * canvas.width, 0.75 * canvas.height);
+    drawScoreText(score, 0.5 * canvas.width, 0.975 * canvas.height);
+    restartButton.style.visibility = "visible";
 
 
 }
 
-function gameOver(){
+function gameOver() {
 
     // clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     // draw the GameOver Text in the middle
-    drawText("Game Over",0.5*canvas.width,0.5*canvas.height);
-    drawText("Score",0.5*canvas.width,0.75*canvas.height);
-    drawScoreText(score,0.5*canvas.width,0.975*canvas.height);
-    restartButton.style.visibility="visible";
+    drawText("Game Over", 0.5 * canvas.width, 0.5 * canvas.height);
+    drawText("Score", 0.5 * canvas.width, 0.75 * canvas.height);
+    drawScoreText(score, 0.5 * canvas.width, 0.975 * canvas.height);
+    restartButton.style.visibility = "visible";
 
     chrome.storage.sync.get(['breakoutHighScore'], function (result) {
         if (score > result.breakoutHighScore) {
-            chrome.storage.sync.set({ breakoutHighScore: score}, function () {
+            chrome.storage.sync.set({ breakoutHighScore: score }, function () {
                 console.log("set breakout high score to" + score);
             });
         }
@@ -345,31 +356,40 @@ function gameOver(){
 }
 
 // listen to keyboard events to move the paddle
-document.addEventListener('keydown', function(e) {
-    // left arrow key
+document.addEventListener('mousedown', function (e) {
+   /* // left arrow key
     if (e.which === 37) {
         paddle.dx = -3;
     }
     // right arrow key
     else if (e.which === 39) {
         paddle.dx = 3;
-    }
+    } */
 
     // space key
     // if they ball is not moving, we can launch the ball using the space key. ball
     // will move towards the bottom right to start
-    if (ball.dx === 0 && ball.dy === 0 && e.which === 32) {
+    if (ball.dx === 0 && ball.dy === 0) {
         ball.dx = ball.speed;
         ball.dy = ball.speed;
     }
 });
 
 // listen to keyboard events to stop the paddle if key is released
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if (e.which === 37 || e.which === 39) {
         paddle.dx = 0;
     }
 });
+
+// listening to the mouse
+canvas.addEventListener("mousemove", getMousePos);
+
+function getMousePos(evt){
+    let rect = canvas.getBoundingClientRect();
+
+    paddle.x = evt.clientX - wallSize - paddle.width/2;
+}
 
 // start the game
 requestAnimationFrame(loop);
