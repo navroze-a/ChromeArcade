@@ -913,7 +913,7 @@ var PACMAN = (function () {
         // draw the GameOver Text in the middle
         drawText("Game Over!", 75, 90);
         drawText("Your score was", 30, 180);
-        drawScoreText(user.theScore(), 110, 250);
+        drawScoreText(user.theScore(), 110, 280);
         restartButton.style.visibility = "visible";
 
         
