@@ -13,7 +13,7 @@ restartButton.onclick = function () {
     backButton.style.background = "pink";
     window.location.href = "snake.html";
 };
-document.body.style.transform = "translateY(15px)";
+document.body.style.transform = "translateY(20px)";
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
