@@ -153,8 +153,8 @@ function loop() {
 
         });
     } else {    // if dead (snake occupies same space as a body part or a wall)
-        console.log("snake died dumbass");
-        gameOver(snake.maxCells);
+        console.log("snake died");
+        setTimeout(() => {  gameOver(snake.maxCells); }, 150);
     }
 }
 
