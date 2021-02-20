@@ -1,6 +1,7 @@
 let backButton = document.getElementById("backButton");
 let restartButton = document.getElementById("restartButton");
 
+
 backButton.onclick = function () {
     backButton.style.color = "green";
     backButton.style.background = "pink";
@@ -45,8 +46,8 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 function drawInScoreText(text, x, y) {
-    context.fillStyle = "#ff0000";
-    context.font = "120px arcade_font";
+    context.fillStyle = "#FFF";
+    context.font = "150px arcade_font";
     context.textAlign = "center";
     context.fillText(text, x, y);
 }
