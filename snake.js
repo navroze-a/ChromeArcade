@@ -13,7 +13,7 @@ restartButton.onclick = function () {
     backButton.style.background = "pink";
     window.location.href = "snake.html";
 };
-
+document.body.style.transform = "translateY(15px)";
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
@@ -183,6 +183,7 @@ function gameOver(score) {
     drawText("Score", 0.5 * canvas.width, 0.75 * canvas.height);
     drawScoreText(score, 0.5 * canvas.width, 0.975 * canvas.height);
     restartButton.style.visibility = "visible";
+    canvas.style.border= "none";
 
     chrome.storage.sync.get(['snakeHighScore'], function (result) {
         if (score > result.snakeHighScore) {
