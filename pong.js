@@ -18,13 +18,13 @@ wall.src = "sounds/wall.mp3";
 comScore.src = "sounds/comScore.mp3";
 userScore.src = "sounds/userScore.mp3";
 
-backButton.onclick = function() {
+backButton.onclick = function () {
     backButton.style.color = "green";
     backButton.style.background = "pink";
     window.location.href = "index.html";
 };
 
-restartButton.onclick = function() {
+restartButton.onclick = function () {
     backButton.style.color = "green";
     backButton.style.background = "pink";
     window.location.href = "pong.html";
@@ -32,46 +32,46 @@ restartButton.onclick = function() {
 
 // Ball object
 const ball = {
-    x : canvas.width/2,
-    y : canvas.height/2,
-    radius : 10,
-    velocityX : 5,
-    velocityY : 5,
-    speed : 7,
-    color : "WHITE"
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 10,
+    velocityX: 5,
+    velocityY: 5,
+    speed: 7,
+    color: "WHITE"
 }
 
 // User Paddle
 const user = {
-    x : 0, // left side of canvas
-    y : (canvas.height - 100)/2, // -100 the height of paddle
-    width : 10,
-    height : 100,
-    score : 0,
-    color : "WHITE"
+    x: 0, // left side of canvas
+    y: (canvas.height - 100) / 2, // -100 the height of paddle
+    width: 10,
+    height: 100,
+    score: 0,
+    color: "WHITE"
 }
 
 // COM Paddle
 const com = {
-    x : canvas.width - 10, // - width of paddle
-    y : (canvas.height - 100)/2, // -100 the height of paddle
-    width : 10,
-    height : 100,
-    score : 0,
-    color : "WHITE"
+    x: canvas.width - 10, // - width of paddle
+    y: (canvas.height - 100) / 2, // -100 the height of paddle
+    width: 10,
+    height: 100,
+    score: 0,
+    color: "WHITE"
 }
 
 // draw a rectangle, will be used to draw paddles
-function drawRect(x, y, w, h, color){
+function drawRect(x, y, w, h, color) {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, w, h);
 }
 
 // draw circle, will be used to draw the ball
-function drawArc(x, y, r, color){
+function drawArc(x, y, r, color) {
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.arc(x,y,r,0,Math.PI*2,true);
+    ctx.arc(x, y, r, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.fill();
 }
@@ -80,10 +80,10 @@ function drawArc(x, y, r, color){
 
 canvas.addEventListener("mousemove", getMousePos);
 
-function getMousePos(evt){
+function getMousePos(evt) {
     let rect = canvas.getBoundingClientRect();
 
-    user.y = evt.clientY - rect.top - user.height/2;
+    user.y = evt.clientY - rect.top - user.height / 2;
 }
 
 /* Human readable keyCode index */
@@ -121,10 +121,11 @@ function keyDown(e) {
 }
 
 // when COM or USER scores, we reset the ball
-function resetBall(){
-    ball.x = canvas.width/2;
-    ball.y = canvas.height/2;
-    //ball.velocityX = -ball.velocityX;
+function resetBall() {
+    ball.x = canvas.width * 0.25;
+    ball.y = canvas.height / 2;
+    // ball.velocityX = -ball.velocityX;
+    ball.velocityY = 0;
     ball.speed = 7;
 }
 
@@ -147,7 +148,7 @@ function drawScoreText(text, x, y) {
 
 
 // collision detection
-function collision(b,p){
+function collision(b, p) {
     p.top = p.y;
     p.bottom = p.y + p.height;
     p.left = p.x;
@@ -158,22 +159,24 @@ function collision(b,p){
     b.left = b.x - b.radius;
     b.right = b.x + b.radius;
 
-    return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
+    return p.left <= b.right && p.top <= b.bottom && p.right >= b.left && p.bottom >= b.top;
 }
 
 // update function, the function that does all calculations
-function update(){
-
+function update() {
+    console.log(ball.speed);
     // change the score of players, if the ball goes to the left "ball.x<0" computer win, else if "ball.x > canvas.width" the user win
-    if( ball.x - ball.radius < 0 ){
+    if (ball.x - ball.radius < 0) {
         com.score++;
         // comScore.play();
         // comScore.pause();
         //resetBall();
-    }else if( ball.x + ball.radius > canvas.width){
+        console.log("com got point");
+    } else if (ball.x + ball.radius > canvas.width) {
         user.score++;
-         //userScore.play();
+        //userScore.play();
         resetBall();
+        console.log("player got point");
     }
 
     // the ball has a velocity
@@ -182,61 +185,75 @@ function update(){
 
     // computer plays for itself, and we must be able to beat it
     // simple AI
-    com.y += ((ball.y - (com.y + com.height/2)))*0.1;
+    com.y += ((ball.y - (com.y + com.height / 2))) * 0.1;
 
     // when the ball collides with bottom and top walls we inverse the y velocity.
-    if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
+    if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
         ball.velocityY = -ball.velocityY;
+
+        if (ball.y < canvas.height / 2) {   // top
+            ball.y = 1 + ball.radius;
+        } else {    // bottom
+            ball.y = canvas.height - ball.radius;
+        }
         // wall.play();
     }
 
     // we check if the paddle hit the user or the com paddle
-    let player = (ball.x + ball.radius < canvas.width/2) ? user : com;
+    let player = (ball.x + ball.radius < canvas.width / 2) ? user : com;
 
     // if the ball hits a paddle
-    if(collision(ball,player)){
+    if (collision(ball, player)) {
+        console.log("collides");
         // play sound
         // hit.play();
         // we check where the ball hits the paddle
-        let collidePoint = (ball.y - (player.y + player.height/2));
+        let collidePoint = (ball.y - (player.y + player.height / 2)); // y coord of collision (based on middle of ball)
         // normalize the value of collidePoint, we need to get numbers between -1 and 1.
         // -player.height/2 < collide Point < player.height/2
-        collidePoint = collidePoint / (player.height/2);
+        collidePoint = collidePoint / (player.height / 2);
         //ball.y = paddle.y - ball.height;
 
         // when the ball hits the top of a paddle we want the ball, to take a -45degees angle
         // when the ball hits the center of the paddle we want the ball to take a 0degrees angle
         // when the ball hits the bottom of the paddle we want the ball to take a 45degrees
         // Math.PI/4 = 45degrees
-        let angleRad = (Math.PI/4) * collidePoint;
+        let angleRad = (Math.PI / 4) * collidePoint;
 
         // change the X and Y velocity direction
-        let direction = (ball.x + ball.radius < canvas.width/2) ? 1 : -1;
+        let direction = (ball.x + ball.radius < canvas.width / 2) ? 1 : -1;   // chooses if it goes left or right depending on which side of screen ball is on
+        console.log(direction);
+        // direction == -1: abt to hit com
+        // direction == 1: abt to hit player
+        // Ensure the ball is now outside
+        if (direction == -1) {    // hitting com
+            ball.x = player.x - ball.radius;
+        } else {
+            ball.x = player.x + player.width + ball.radius;
+        }
+
         ball.velocityX = direction * ball.speed * Math.cos(angleRad);
         ball.velocityY = ball.speed * Math.sin(angleRad);
 
 
 
         // speed up the ball everytime a paddle hits it.
-
-        if(ball.speed<13) {
-            ball.speed += 0.4;
-        }
-        console.log(ball.speed)
+        ball.speed += 0.4;
     }
+
 }
 
 // render function, the function that does al the drawing
-function render(){
+function render() {
 
     // clear the canvas
     drawRect(0, 0, canvas.width, canvas.height, "#000");
 
     // draw the user score to the left
-    drawText(user.score,canvas.width/4,canvas.height/5);
+    drawText(user.score, canvas.width / 4, canvas.height / 5);
 
     // draw the COM score to the right
-    drawText(com.score,3*canvas.width/4,canvas.height/5);
+    drawText(com.score, 3 * canvas.width / 4, canvas.height / 5);
 
 
 
@@ -250,20 +267,20 @@ function render(){
     drawArc(ball.x, ball.y, ball.radius, ball.color);
 }
 
-function gameOver(){
+function gameOver() {
 
     // clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // draw the GameOver Text in the middle
-    drawText("Game Over",0.5*canvas.width,0.5*canvas.height);
-    drawText("Score",0.5*canvas.width,0.75*canvas.height);
-    drawScoreText(user.score,0.5*canvas.width,0.99*canvas.height);
-    restartButton.style.visibility="visible";
+    drawText("Game Over", 0.5 * canvas.width, 0.5 * canvas.height);
+    drawText("Score", 0.5 * canvas.width, 0.75 * canvas.height);
+    drawScoreText(user.score, 0.5 * canvas.width, 0.99 * canvas.height);
+    restartButton.style.visibility = "visible";
 
     chrome.storage.sync.get(['pongHighScore'], function (result) {
         if (user.score > result.pongHighScore) {
-            chrome.storage.sync.set({ pongHighScore: user.score}, function () {
+            chrome.storage.sync.set({ pongHighScore: user.score }, function () {
                 console.log("set pong high score to" + user.score);
             });
         }
@@ -273,8 +290,8 @@ function gameOver(){
 
 }
 
-function game(){
-    if (com.score<1) {
+function game() {
+    if (com.score < 1) {
         update();
         render();
     } else {
@@ -285,4 +302,14 @@ function game(){
 let framePerSecond = 50;
 
 //call the game function 50 times every 1 Sec
-let loop = setInterval(game,1000/framePerSecond);
+let loop = setInterval(game, 1000 / framePerSecond);
+
+
+
+
+function collides(obj1, obj2) {
+    return obj1.x < obj2.x + obj2.width &&
+        obj1.x + obj1.width > obj2.x &&
+        obj1.y < obj2.y + obj2.height &&
+        obj1.y + obj1.height > obj2.y;
+}
