@@ -44,16 +44,29 @@ var apple = {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+function drawInScoreText(text, x, y) {
+    context.fillStyle = "#ff0000";
+    context.font = "120px arcade_font";
+    context.textAlign = "center";
+    context.fillText(text, x, y);
+}
+
 
 // game loop
 function loop() {
     if (snake.alive) {
+
+
         requestAnimationFrame(loop);
+
+
+
 
         // slow game loop to 15 fps instead of 60 (60/15 = 4)
         if (++count < 4) {
             return;
         }
+
 
         count = 0;
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -90,6 +103,8 @@ function loop() {
             snake.cells.pop();
         }
 
+        drawInScoreText(snake.maxCells, 0.5 * canvas.width, 0.5 * canvas.height);
+
         // draw apple
         context.fillStyle = 'red';
         context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
@@ -116,7 +131,7 @@ function loop() {
                 // snake occupies same space as a body part. reset game
                 if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
                     snake.alive = false;
-                    if (alive) {
+                    if (snake.alive) {
                         snake.x = 160;
                         snake.y = 160;
                         snake.cells = [];
@@ -132,12 +147,16 @@ function loop() {
 
                 }
             }
+
+
+
         });
     } else {    // if dead (snake occupies same space as a body part or a wall)
         console.log("snake died dumbass");
         gameOver(snake.maxCells);
     }
 }
+
 
 function drawText(text, x, y) {
     context.fillStyle = "#FFF";
@@ -176,34 +195,79 @@ function gameOver(score) {
 
 }
 
-// listen to keyboard events to move the snake
-document.addEventListener('keydown', function (e) {
-    // prevent snake from backtracking on itself by checking that it's
-    // not already moving on the same axis (pressing left while moving
-    // left won't do anything, and pressing right while moving left
-    // shouldn't let you collide with your own body)
+// // listen to keyboard events to move the snake
+// document.addEventListener('keydown', function (e) {
+//     // prevent snake from backtracking on itself by checking that it's
+//     // not already moving on the same axis (pressing left while moving
+//     // left won't do anything, and pressing right while moving left
+//     // shouldn't let you collide with your own body)
+//
+//     // left arrow key
+//     if (e.which === 37 && snake.dx === 0) {
+//         snake.dx = -grid;
+//         snake.dy = 0;
+//     }
+//     // up arrow key
+//     else if (e.which === 38 && snake.dy === 0) {
+//         snake.dy = -grid;
+//         snake.dx = 0;
+//     }
+//     // right arrow key
+//     else if (e.which === 39 && snake.dx === 0) {
+//         snake.dx = grid;
+//         snake.dy = 0;
+//     }
+//     // down arrow key
+//     else if (e.which === 40 && snake.dy === 0) {
+//         snake.dy = grid;
+//         snake.dx = 0;
+//     }
+// });
 
-    // left arrow key
-    if (e.which === 37 && snake.dx === 0) {
+var KEY = { 'BACKSPACE': 8, 'TAB': 9, 'NUM_PAD_CLEAR': 12, 'ENTER': 13, 'SHIFT': 16, 'CTRL': 17, 'ALT': 18, 'PAUSE': 19, 'CAPS_LOCK': 20, 'ESCAPE': 27, 'SPACEBAR': 32, 'PAGE_UP': 33, 'PAGE_DOWN': 34, 'END': 35, 'HOME': 36, 'ARROW_LEFT': 37, 'ARROW_UP': 38, 'ARROW_RIGHT': 39, 'ARROW_DOWN': 40, 'PRINT_SCREEN': 44, 'INSERT': 45, 'DELETE': 46, 'SEMICOLON': 59, 'WINDOWS_LEFT': 91, 'WINDOWS_RIGHT': 92, 'SELECT': 93, 'NUM_PAD_ASTERISK': 106, 'NUM_PAD_PLUS_SIGN': 107, 'NUM_PAD_HYPHEN-MINUS': 109, 'NUM_PAD_FULL_STOP': 110, 'NUM_PAD_SOLIDUS': 111, 'NUM_LOCK': 144, 'SCROLL_LOCK': 145, 'SEMICOLON': 186, 'EQUALS_SIGN': 187, 'COMMA': 188, 'HYPHEN-MINUS': 189, 'FULL_STOP': 190, 'SOLIDUS': 191, 'GRAVE_ACCENT': 192, 'LEFT_SQUARE_BRACKET': 219, 'REVERSE_SOLIDUS': 220, 'RIGHT_SQUARE_BRACKET': 221, 'APOSTROPHE': 222 };
+
+(function () {
+    /* 0 - 9 */
+    for (var i = 48; i <= 57; i++) {
+        KEY['' + (i - 48)] = i;
+    }
+    /* A - Z */
+    for (i = 65; i <= 90; i++) {
+        KEY['' + String.fromCharCode(i)] = i;
+    }
+    /* NUM_PAD_0 - NUM_PAD_9 */
+    for (i = 96; i <= 105; i++) {
+        KEY['NUM_PAD_' + (i - 96)] = i;
+    }
+    /* F1 - F12 */
+    for (i = 112; i <= 123; i++) {
+        KEY['F' + (i - 112 + 1)] = i;
+    }
+})();
+
+document.addEventListener("keydown", keyDown, true);
+
+function keyDown(e) {
+
+    if (e.keyCode === KEY.BACKSPACE) {
+        window.location.href = "index.html";
+    } else if (e.keyCode === KEY.R) {
+        window.location.href = "snake.html";
+    } else if (e.keyCode === KEY.ARROW_LEFT && snake.dx === 0) {
         snake.dx = -grid;
         snake.dy = 0;
-    }
-    // up arrow key
-    else if (e.which === 38 && snake.dy === 0) {
+    } else if (e.keyCode === KEY.ARROW_UP && snake.dy === 0) {
         snake.dy = -grid;
         snake.dx = 0;
-    }
-    // right arrow key
-    else if (e.which === 39 && snake.dx === 0) {
+    } else if (e.keyCode === KEY.ARROW_RIGHT && snake.dx === 0) {
         snake.dx = grid;
         snake.dy = 0;
-    }
-    // down arrow key
-    else if (e.which === 40 && snake.dy === 0) {
+    } else if (e.keyCode === KEY.ARROW_DOWN && snake.dy === 0) {
         snake.dy = grid;
         snake.dx = 0;
     }
-});
+    return true;
+}
 
 // start the game
 requestAnimationFrame(loop);

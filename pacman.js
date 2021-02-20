@@ -860,8 +860,12 @@ var PACMAN = (function () {
     function keyDown(e) {
         if (e.keyCode === KEY.N) {
             startNewGame();
+        } else if (e.keyCode === KEY.BACKSPACE) {
+            window.location.href = "index.html";
+        } else if (e.keyCode === KEY.R) {
+            window.location.href = "pacman.html";
         } else if (e.keyCode === KEY.S) {
-            audio.disableSound();
+            audio.resume();
             localStorage["soundDisabled"] = !soundDisabled();
         } else if (e.keyCode === KEY.P && state === PAUSE) {
             audio.resume();
