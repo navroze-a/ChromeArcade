@@ -159,7 +159,6 @@ function loop() {
             ball.counter = 0;
         }
 
-
         function drawInScoreText(text, x, y) {
             context.fillStyle = "#FFF";
             context.font = "20px arcade_font";
@@ -167,7 +166,6 @@ function loop() {
         }
 
         //End game if 3 lives lost
-
 
         // check to see if ball collides with paddle. if they do change y velocity
         if (collides(ball, paddle)) {
@@ -208,14 +206,11 @@ function loop() {
 
                 console.log("FINAL: Hit brick " + brick.color);
 
-
-
                 ball.dx /= ball.speed;
                 ball.dy /= ball.speed;
                 ball.speed += 0.2;
                 ball.dx *= ball.speed;
                 ball.dy *= ball.speed;
-
 
                 // ball is above or below the brick, change y velocity
                 // account for the balls speed since it will be inside the brick when it
@@ -230,43 +225,9 @@ function loop() {
                     ball.dx *= -1;
 
                 }
-
-
-
-
-                // let collidePoint = (ball.y - (brick.width + brick.height/2));
-                // // normalize the value of collidePoint, we need to get numbers between -1 and 1.
-                // // -player.height/2 < collide Point < player.height/2
-                // collidePoint = collidePoint / (brick.height/2);
-                //
-                // // when the ball hits the top of a paddle we want the ball, to take a -45degees angle
-                // // when the ball hits the center of the paddle we want the ball to take a 0degrees angle
-                // // when the ball hits the bottom of the paddle we want the ball to take a 45degrees
-                // // Math.PI/4 = 45degrees
-                // let angleRad = (Math.PI/4) * collidePoint;
-                //
-                // // change the X and Y velocity direction
-                // let direction = (ball.x + ball.radius < canvas.width/2) ? 1 : -1;
-                //
-                //
-                // if (ball.y + ball.height - ball.speed <= brick.y ||
-                //     ball.y >= brick.y + brick.height - ball.speed) {
-                //     ball.dy = ball.speed * Math.sin(angleRad);
-                //
-                // }
-                // // ball is on either side of the brick, change x velocity
-                // else {
-                //     ball.dx = direction * ball.speed * Math.cos(angleRad);
-                //
-                // }
-                //
-                // // speed up the ball everytime a paddle hits it.
-                // ball.speed += 0.1;
-
                 break;
             }
         }
-
 
         // draw walls
         context.fillStyle = 'lightgrey';
@@ -298,7 +259,6 @@ function loop() {
     }
 }
 
-
 function drawText(text, x, y) {
     context.fillStyle = "#FFF";
     context.font = "90px arcade_font";
@@ -313,10 +273,7 @@ function drawScoreText(text, x, y) {
     context.fillText(text, x, y);
 }
 
-
-
 // draw text
-
 
 function gameWin() {
 
@@ -357,28 +314,9 @@ function gameOver() {
 
 // listen to keyboard events to move the paddle
 document.addEventListener('mousedown', function (e) {
-   /* // left arrow key
-    if (e.which === 37) {
-        paddle.dx = -3;
-    }
-    // right arrow key
-    else if (e.which === 39) {
-        paddle.dx = 3;
-    } */
-
-    // space key
-    // if they ball is not moving, we can launch the ball using the space key. ball
-    // will move towards the bottom right to start
     if (ball.dx === 0 && ball.dy === 0) {
         ball.dx = ball.speed;
         ball.dy = ball.speed;
-    }
-});
-
-// listen to keyboard events to stop the paddle if key is released
-document.addEventListener('keyup', function (e) {
-    if (e.which === 37 || e.which === 39) {
-        paddle.dx = 0;
     }
 });
 

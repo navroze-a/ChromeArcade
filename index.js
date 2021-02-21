@@ -27,9 +27,6 @@ snakeButton.onclick = function(element) {
     window.location.href = "snakePauseScreen.html";
 }
 
-
-
-
 scoreButton.onmouseover = function (element) {
 
 
@@ -64,7 +61,5 @@ scoreButton.onmouseout = function (element) {
     breakoutButton.innerHTML = "BREAKOUT";
     snakeButton.innerHTML = "SNAKE";
 };
-
-
 
 // icon comes from https://www.vecteezy.com/vector-art/120089-arcade-button-vector
