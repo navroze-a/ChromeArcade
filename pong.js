@@ -130,7 +130,6 @@ function resetBall() {
 }
 
 
-
 // draw text
 function drawText(text, x, y) {
     ctx.fillStyle = "#FFF";
