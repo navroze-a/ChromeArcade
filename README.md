@@ -1,7 +1,7 @@
 # Chrome Arcade ![Icon](https://github.com/navroze-a/ChromeArcade/blob/main/images/icon48.png)
 A chrome extension hosting a variety of simple mouse-based or keyboard based games to play within an unobtrusive popup!
-All games are able to save the highscores to Chrome so you can always look back and try to beat your score!
-Return and Restart Buttons as well as key binds are available for contiunous gameplay!
+* All games are able to save highscores to Chrome, so you can always look back and try to beat your scores!
+* Return and Restart Buttons as well as easy-to-use keybinds are available, for continous gameplay!
 
 ## **Pacman**
 
