@@ -44,4 +44,7 @@ A chrome extension hosting a variety of simple mouse-based or keyboard based gam
 * Select the pin beside the Chrome Arcade icon to pin it to your taskbar
 * Ta-da!
 
+<br />
+<br />
 
+Extension Icon credit: [ayaankabir](https://www.vecteezy.com/members/ayaankabir)
